@@ -29,7 +29,7 @@
   <text x="430" y="180" fill="#8a8f98" font-size="12">hot path: rerun per resize — no DOM, no reflow</text>
   <path d="M430 190 h180" stroke="#8ab8ff" stroke-dasharray="4 4" fill="none"/>
 
-  <text x="24" y="222" fill="#8a8f98" font-size="11">nagops.com uses the result as min-height — the typewriter types into space reserved before the first character.</text>
+  <text x="24" y="222" fill="#8a8f98" font-size="11">satterly.dev uses the result as min-height — the typewriter types into space reserved before the first character.</text>
 
   <defs>
     <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">

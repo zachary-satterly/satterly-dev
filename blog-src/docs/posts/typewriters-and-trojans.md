@@ -8,28 +8,47 @@ categories:
 
 # Typewriters and trojans
 
-Fireship, which private equity owns a piece of now, covered [an npm library I wanted](https://www.youtube.com/watch?v=vd14EElCRvs) and [a RAT hiding in one of the most installed libraries on earth](https://www.youtube.com/watch?v=o7NYXvYohYk) in the same feed. So I adopted the first one like the second one was watching.
+Fireship, one of my favorite private equity backed Youtube technology channels, posted about [an awesome new npm library](https://www.youtube.com/watch?v=vd14EElCRvs) and [a RAT hiding in one of the most installed libraries on earth](https://www.youtube.com/watch?v=o7NYXvYohYk) in the same feed, around the same time. 
+
+If I find something interesting in the code report, often times i'll go to one of my trusty agents to learn, build and, eventually, secure. One of the best things about AI these days is you can wear many hats, and since I work in security, I can do some full stack engineering, but keep sharpening my security toolkit by securing the thing. Cue [nagops.com](https://www.nagops.com).
 
 <!-- more -->
 
-Here's what happened to axios. On March 30, an attacker [hijacked a maintainer's npm account](https://www.stepsecurity.io/blog/axios-compromised-on-npm-malicious-versions-drop-remote-access-trojan) and published two poisoned versions of a library with 100 million weekly downloads. The malicious releases added one dependency: `plain-crypto-js`, a typosquat of crypto-js, never imported anywhere in the code. It didn't need to be imported. Its postinstall script ran at install time and dropped a cross-platform RAT that harvests SSH keys, cloud tokens, and credentials off the developer's machine. It was live for about three hours. [Backstage's CI caught it executing](https://securitylabs.datadoghq.com/articles/axios-npm-supply-chain-compromise/) in production pipelines.
+The [pretext]((https://github.com/chenglou/pretext)) module - tldr; Pretext is a text measurement engine. Normally when you ask "how tall is this paragraph?", <the browser has to stop and think about it, and asking a lot makes pages junky>. pretext measures each character once, and after that every answer is just math. How fast is just math? Fast enough that someone built [a full Breakout clone on it](https://pretextjs.dev/pretext-breaker) where the bricks are words, the ball smashes through sentences, and the background text flows around everything at 60fps. The results <can create fun frontend design>
 
-The lesson is one sentence: `npm install` is arbitrary code execution, and the code isn't always the library.
+The [axios](https://www.stepsecurity.io/blog/axios-compromised-on-npm-malicious-versions-drop-remote-access-trojan) story - tldr; an attacker hijacked a maintainer's npm account and shipped two poisoned versions of a library with 100 million weekly downloads. The whole payload was one new dependency, `plain-crypto-js`, a typosquat of crypto-js. It doesn't need importing. Its postinstall script runs at install time and drops a cross-platform RAT that vacuums up SSH keys, cloud tokens, and credentials. It was live for about three hours, which was still long enough for [Backstage's CI to catch it executing](https://securitylabs.datadoghq.com/articles/axios-npm-supply-chain-compromise/) in production pipelines.
 
-The library I wanted is [pretext](https://github.com/chenglou/pretext), Cheng Lou's text measurement engine. `prepare()` segments a string and caches canvas-measured widths. `layout()` turns a width into a height and line count with plain arithmetic. No reflow. No markup either: pretext returns numbers, and the typed headline on this page goes through `textContent`, never `innerHTML`. There's no DOM XSS sink in the path.
+The lesson fits in one sentence: `npm install` is arbitrary code execution, and the code isn't always the library.
 
-So how do you install a dependency the same month axios grew a RAT? Deliberately.
+So how do you install a dependency the same month axios grew a RAT? Slowly, and on purpose.
 
-I fetched the tarball with `npm pack`, which downloads without executing lifecycle scripts. I read the package.json before anything ran: zero runtime dependencies, zero install hooks. That check takes thirty seconds and would have caught the axios payload, because `plain-crypto-js` appeared as a new dependency in a patch release of an HTTP client. Dependencies that appear without a reason are the tell.
+`npm pack` downloads the package without running a single line of its code. Then you read package.json like it owes you money:
 
-Then I vendored it. pretext 0.0.8 lives in this repo, license included. The deployed site makes zero requests to CDNs or registries, and a hijacked maintainer account can't reach a page that never fetches. The CSP is `default-src 'none'; script-src 'self'`. Updates happen when I pack the new version, diff it, and commit it on purpose. The axios window was three hours. Deliberate updates don't race a three-hour window.
+![Terminal: npm pack of pretext, jq shows null dependencies, grep finds zero install hooks](../assets/pretext-npm-pack-check.png)
 
-One boundary worth being precise about: the axios RAT attacked developers, not users. My CSP protects visitors. My install discipline protects me. Different targets, different controls, and confusing the two is how sites end up with a security page that protects nobody.
+Zero dependencies, nothing that runs at install time, thirty seconds of reading. That same check catches the axios payload, because a crypto library materializing in a patch release of an HTTP client is not subtle.
 
-The cost, stated plainly: vendoring means no advisory feed watches my vendor folder. Noticing is my job now. For one library with no dependencies on a one-page site, easy trade. At work scale I'd argue the other side.
+Then I vendored it. pretext 0.0.8 lives in this repo, license included, and the deployed page makes zero requests to CDNs or registries. A hijacked maintainer account can't reach a site that never phones home. Updates happen when I pack the new version, diff it, and commit it on purpose. The axios window was three hours; deliberate updates don't race three-hour windows.
 
-Pick controls you can actually operate. A control you can't operate is a delayed incident.
+The cost, stated plainly: no advisory feed watches my vendor folder. Noticing is my job now. For one dependency-free library on a one-page site, easy trade. At work scale I'd argue the other side.
+
+And the other side has tooling now, because Fireship [covered that too](https://www.youtube.com/watch?v=gwTQLZSIlsU) after a worm chewed through TanStack this May. The short version: use pnpm 11 and let someone else's code be paranoid for you.
+
+```yaml
+# pnpm-workspace.yaml
+minimumReleaseAge: 4320   # ignore anything published in the last 3 days
+blockExoticSubdeps: true  # sub-dependencies can't come from random git repos or tarball URLs
+trustPolicy: no-downgrade # if a package's publisher trust drops, don't install it
+```
+
+Install scripts have been dead by default since pnpm 10, so a `plain-crypto-js` never gets to run its payload; anything that legitimately needs to build gets added to [allowBuilds](https://pnpm.io/supply-chain-security) by hand, on purpose. And the release-age delay is the quiet killer: the axios versions lived three hours, malware rarely survives a day, and pnpm 11 now waits a full day by default before it will even look at a new release. Most supply chain attacks die in the waiting room.
+
+One boundary worth keeping sharp: the axios RAT attacked developers, not users. Install discipline protects me. Headers protect visitors. Confusing the two is how sites end up with a security page that protects nobody.
 
 ---
 
-This is the first post in **build it & secure it**: agents build something real, I try to secure and learn from it. If something breaks, you'll read about that too. Speaking of which: [nagops.com](https://nagops.com).
+This is the first post in **build it & secure it**: agents build something real, I secure it and learn from it. The something real is [nagops.com](https://nagops.com), and here's what it scores on [securityheaders.com](https://securityheaders.com) today:
+
+![securityheaders.com scan of nagops.com: grade D, missing CSP, HSTS, X-Frame-Options, and Permissions-Policy](../assets/nagops-securityheaders-d.png)
+
+A D. The agents shipped features; nobody shipped headers. That's the next post.

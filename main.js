@@ -1,4 +1,4 @@
-// nagops.com — typed headline with pretext-measured height reservation.
+// satterly.dev — typed headline with pretext-measured height reservation.
 // pretext is vendored (see /vendor/pretext, MIT) — no runtime CDN or registry trust.
 
 const FULL = [
