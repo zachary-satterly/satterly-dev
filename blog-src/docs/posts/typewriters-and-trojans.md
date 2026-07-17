@@ -14,7 +14,7 @@ If I find something interesting in the code report, often times i'll go to one o
 
 <!-- more -->
 
-The [pretext]((https://github.com/chenglou/pretext)) module - tldr; Pretext is a text measurement engine. Normally when you ask "how tall is this paragraph?", <the browser has to stop and think about it, and asking a lot makes pages junky>. pretext measures each character once, and after that every answer is just math. How fast is just math? Fast enough that someone built [a full Breakout clone on it](https://pretextjs.dev/pretext-breaker) where the bricks are words, the ball smashes through sentences, and the background text flows around everything at 60fps. The results <can create fun frontend design>
+The [pretext](https://github.com/chenglou/pretext) module - tldr; Pretext is a text measurement engine. Normally when you ask "how tall is this paragraph?", the browser has to stop and think about it, and asking a lot makes pages janky. pretext measures each character once, and after that every answer is just math. How fast is just math? Fast enough that someone built [a full Breakout clone on it](https://pretextjs.dev/pretext-breaker) where the bricks are words, the ball smashes through sentences, and the background text flows around everything at 60fps.
 
 The [axios](https://www.stepsecurity.io/blog/axios-compromised-on-npm-malicious-versions-drop-remote-access-trojan) story - tldr; an attacker hijacked a maintainer's npm account and shipped two poisoned versions of a library with 100 million weekly downloads. The whole payload was one new dependency, `plain-crypto-js`, a typosquat of crypto-js. It doesn't need importing. Its postinstall script runs at install time and drops a cross-platform RAT that vacuums up SSH keys, cloud tokens, and credentials. It was live for about three hours, which was still long enough for [Backstage's CI to catch it executing](https://securitylabs.datadoghq.com/articles/axios-npm-supply-chain-compromise/) in production pipelines.
 
@@ -28,7 +28,7 @@ So how do you install a dependency the same month axios grew a RAT? Slowly, and 
 
 Zero dependencies, nothing that runs at install time, thirty seconds of reading. That same check catches the axios payload, because a crypto library materializing in a patch release of an HTTP client is not subtle.
 
-Then I vendored it. pretext 0.0.8 lives in this repo, license included, and the deployed page makes zero requests to CDNs or registries. A hijacked maintainer account can't reach a site that never phones home. Updates happen when I pack the new version, diff it, and commit it on purpose. The axios window was three hours; deliberate updates don't race three-hour windows.
+Then I vendored it. pretext 0.0.8 lives in this site's repo, license included, and the deployed page makes zero requests to CDNs or registries. (nagops.com consumes it the other way — an npm dependency locked by package-lock.json and bundled at build time, so the deployed page doesn't phone home either.) A hijacked maintainer account can't reach a site that never phones home. Updates happen when I pack the new version, diff it, and commit it on purpose. The axios window was three hours; deliberate updates don't race three-hour windows.
 
 The cost, stated plainly: no advisory feed watches my vendor folder. Noticing is my job now. For one dependency-free library on a one-page site, easy trade. At work scale I'd argue the other side.
 
