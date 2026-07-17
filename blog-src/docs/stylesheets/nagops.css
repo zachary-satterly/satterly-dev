@@ -1,0 +1,22 @@
+/* Match the hand-rolled homepage palette */
+:root {
+  --md-primary-fg-color: #0c0e12;
+  --md-accent-fg-color: #8ab8ff;
+  --md-code-font: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  --md-text-font: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+}
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: #0c0e12;
+  --md-default-fg-color: #e8e6e1;
+  --md-typeset-a-color: #8ab8ff;
+}
+[data-md-color-scheme="default"] {
+  --md-default-bg-color: #faf9f7;
+  --md-typeset-a-color: #1d5fd6;
+}
+.md-typeset h1, .md-typeset h2 { font-weight: 500; letter-spacing: -0.01em; }
+.md-typeset h2 { color: #7ee2a8; }
+[data-md-color-scheme="default"] .md-typeset h2 { color: #0a7d43; }
+.md-header { background-color: var(--md-default-bg-color); }
+.md-typeset { font-size: 0.72rem; line-height: 1.8; }
+.md-typeset figure > figcaption { color: #8a8f98; font-size: 0.65rem; }

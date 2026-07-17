@@ -1,0 +1,52 @@
+site_name: satterly.dev — writing
+site_url: https://satterly.dev/blog/
+site_description: Zachary Satterly's blog. Security, agents, and whatever I'm currently into.
+use_directory_urls: true
+
+theme:
+  name: material
+  font: false
+  palette:
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: dark mode
+  features:
+    - navigation.sections
+    - content.code.copy
+
+extra_css:
+  - stylesheets/nagops.css
+
+plugins:
+  - blog:
+      blog_dir: .
+      blog_toc: true
+      post_url_format: "{slug}"
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - footnotes
+
+extra:
+  social:
+    - icon: material/home
+      link: https://satterly.dev
+    - icon: fontawesome/brands/github
+      link: https://github.com/ur-passwd-hash
+copyright: "Zachary Satterly"
