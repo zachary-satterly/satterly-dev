@@ -14,7 +14,7 @@ Fireship put two videos in my feed the same week: [a delightful new text-measure
 
 ## The build
 
-[nagops.com](https://nagops.com) is a satirical project-management nag: a keyword field of workplace dread ("story points are astrology for engineers"), a sprint clock that never stops, UFOs that abduct your backlog. Agents built it. Vite, TypeScript, and one runtime dependency — [pretext](https://github.com/chenglou/pretext), Cheng Lou's text measurement engine. Pretext measures every keyword once; after that, physics, hit-testing, and scoring are arithmetic on cached widths. It's a great library doing a small job well.
+[nagops.com](https://nagops.com) is a satirical project-management nag: a keyword field of workplace dread ("story points are astrology for engineers"), a sprint clock that never stops, UFOs that abduct your backlog. Agents built it. Vite, TypeScript, and one runtime dependency: [pretext](https://github.com/chenglou/pretext), Cheng Lou's text measurement engine. Pretext measures every keyword once; after that, physics, hit-testing, and scoring are arithmetic on cached widths. It's a great library doing a small job well.
 
 ![nagops.com — the Ship It scoreboard and keyword field](../assets/nagops-ship-it.png)
 
@@ -26,7 +26,7 @@ On May 11, 2026, an attacker published 84 malicious versions across 42 TanStack 
 
 No password was cracked. The chain, per TanStack's postmortem:
 
-1. A `pull_request_target` workflow checked out and ran fork-controlled code — privileged context, untrusted input.
+1. A `pull_request_target` workflow checked out and ran fork-controlled code. Privileged context, untrusted input.
 2. That code poisoned a build cache shared with the release path, then the attacker restored the PR to a no-op and closed it. It sat open roughly 42 minutes.
 3. The release runner restored the poisoned cache.
 4. The payload read a short-lived GitHub Actions OIDC credential out of runner memory.
@@ -34,7 +34,7 @@ No password was cracked. The chain, per TanStack's postmortem:
 
 The release path was authenticated the whole time. The inputs behind it were already rotten. Signatures answer "did the right pipeline publish this?" — not "was the pipeline's lunch poisoned?"
 
-One more detail. The malicious commits were authored as `claude <claude@users.noreply.github.com>` — a fabricated identity, not the real Anthropic tooling. The attacker knew nobody looks twice at an AI's name in a commit log anymore. Sit with that.
+One more detail. The malicious commits were authored as `claude <claude@users.noreply.github.com>`. Fabricated identity, not the real Anthropic tooling. The attacker knew nobody looks twice at an AI's name in a commit log anymore. Sit with that.
 
 ## The audit
 
@@ -42,7 +42,7 @@ The video ends with four concrete protections: pnpm 11, a minimum release age, b
 
 Out of the box, my agents had implemented none of them.
 
-Not a complaint — a finding. The agents shipped exactly what I asked for: a working site, fast. What they defaulted to was npm with stock settings (no release-age gate exists there at all), install scripts enabled, Google Fonts called from the page head, no CSP, no HSTS, and a security.txt that was actually the SPA's catch-all faking a 200. Here's what securityheaders.com thought of it:
+Not a complaint. A finding. The agents shipped exactly what I asked for: a working site, fast. What they defaulted to was npm with stock settings (no release-age gate exists there at all), install scripts enabled, Google Fonts called from the page head, no CSP, no HSTS, and a security.txt that was actually the SPA's catch-all faking a 200. Here's what securityheaders.com thought of it:
 
 ![securityheaders.com scan of nagops.com: grade D, missing CSP, HSTS, X-Frame-Options, and Permissions-Policy](../assets/nagops-securityheaders-d.png)
 
@@ -64,7 +64,7 @@ What each line buys, against the incident above:
 - **`minimumReleaseAge`**: the malicious TanStack versions lived hours. A three-day quarantine means my install never even sees a release that young. pnpm 11 defaults this to one day, but the default is non-strict and can fall back — set it explicitly if you want it enforced.
 - **`blockExoticSubdeps`**: no dependency of a dependency can quietly resolve from someone's git branch.
 - **`trustPolicy: no-downgrade`**: a package that was publishing with provenance and suddenly isn't is exactly what a hijacked account looks like. Refuse it.
-- **Install scripts**: dead by default since pnpm 10. A postinstall payload never runs. Anything that legitimately needs to build goes through `pnpm approve-builds`, by hand, on purpose. This project's allowlist is empty — Vite 8 ships prebuilt binaries.
+- **Install scripts**: dead by default since pnpm 10. A postinstall payload never runs. Anything that legitimately needs to build goes through `pnpm approve-builds`, by hand, on purpose. This project's allowlist is empty; Vite 8 ships prebuilt binaries.
 
 And the one runtime dependency got the manual treatment before it was ever installed: `npm pack`, then read the tarball like it owes you money.
 
@@ -74,7 +74,7 @@ Zero dependencies, zero install hooks, thirty seconds of reading. Pretext was ne
 
 ## What's still open
 
-The D grade. The hardening files are staged — strict CSP, HSTS, a real security.txt — and the Google Fonts call is getting replaced with self-hosted files so the deployed page phones exactly no one. That's the next post: taking a site agents built from D to A without breaking the gag.
+The D grade. The hardening files are staged (strict CSP, HSTS, a real security.txt), and the Google Fonts call is getting replaced with self-hosted files so the deployed page phones exactly no one. That's the next post: taking a site agents built from D to A without breaking the gag.
 
 The scoreboard on nagops.com counts story points. The supply chain doesn't award any for installing fast.
 
