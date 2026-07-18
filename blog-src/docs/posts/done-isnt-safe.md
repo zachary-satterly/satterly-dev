@@ -16,7 +16,7 @@ Fireship put two videos in my feed the same week: [a delightful new text-measure
 
 [nagops.com](https://nagops.com) is a satirical project-management nag: a keyword field of workplace dread ("story points are astrology for engineers"), a sprint clock that never stops, UFOs that abduct your backlog. Agents built it. Vite, TypeScript, and one runtime dependency: [pretext](https://github.com/chenglou/pretext), Cheng Lou's text measurement engine. Pretext measures every keyword once; after that, physics, hit-testing, and scoring are arithmetic on cached widths. It's a great library doing a small job well.
 
-![nagops.com — the Ship It scoreboard and keyword field](../assets/nagops-ship-it.png)
+![nagops.com, the Ship It scoreboard and keyword field](../assets/nagops-ship-it.png)
 
 That's the first video's contribution. Now the second one.
 
@@ -32,7 +32,7 @@ No password was cracked. The chain, per TanStack's postmortem:
 4. The payload read a short-lived GitHub Actions OIDC credential out of runner memory.
 5. npm's trusted publishing accepted a credential from the authorized workflow, and shipped malware.
 
-The release path was authenticated the whole time. The inputs behind it were already rotten. Signatures answer "did the right pipeline publish this?" — not "was the pipeline's lunch poisoned?"
+The release path was authenticated the whole time. The inputs behind it were already rotten. Signatures answer "did the right pipeline publish this?", not "was the pipeline's lunch poisoned?"
 
 One more detail. The malicious commits were authored as `claude <claude@users.noreply.github.com>`. Fabricated identity, not the real Anthropic tooling. The attacker knew nobody looks twice at an AI's name in a commit log anymore. Sit with that.
 
@@ -61,7 +61,7 @@ trustPolicy: no-downgrade  # refuse packages whose publisher trust dropped
 
 What each line buys, against the incident above:
 
-- **`minimumReleaseAge`**: the malicious TanStack versions lived hours. A three-day quarantine means my install never even sees a release that young. pnpm 11 defaults this to one day, but the default is non-strict and can fall back — set it explicitly if you want it enforced.
+- **`minimumReleaseAge`**: the malicious TanStack versions lived hours. A three-day quarantine means my install never even sees a release that young. pnpm 11 defaults this to one day, but the default is non-strict and can fall back. Set it explicitly if you want it enforced.
 - **`blockExoticSubdeps`**: no dependency of a dependency can quietly resolve from someone's git branch.
 - **`trustPolicy: no-downgrade`**: a package that was publishing with provenance and suddenly isn't is exactly what a hijacked account looks like. Refuse it.
 - **Install scripts**: dead by default since pnpm 10. A postinstall payload never runs. Anything that legitimately needs to build goes through `pnpm approve-builds`, by hand, on purpose. This project's allowlist is empty; Vite 8 ships prebuilt binaries.
@@ -70,7 +70,7 @@ And the one runtime dependency got the manual treatment before it was ever insta
 
 ![Terminal: npm pack of pretext, jq shows null dependencies, grep finds zero install hooks](../assets/pretext-npm-pack-check.png)
 
-Zero dependencies, zero install hooks, thirty seconds of reading. Pretext was never implicated in the TanStack campaign — the point is I can say that from the tarball, not from vibes.
+Zero dependencies, zero install hooks, thirty seconds of reading. Pretext was never implicated in the TanStack campaign. The point is I can say that from the tarball, not from vibes.
 
 ## What's still open
 
