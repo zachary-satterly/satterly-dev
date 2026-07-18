@@ -1,12 +1,12 @@
 ---
 date: 2026-07-17
-title: Is it done yet? Wrong question.
-slug: is-it-done-yet-wrong-question
+title: Done isn't safe
+slug: done-isnt-safe
 categories:
   - build it & secure it
 ---
 
-# Is it done yet? Wrong question.
+# Done isn't safe
 
 Fireship put two videos in my feed the same week: [a delightful new text-measurement library](https://www.youtube.com/watch?v=vd14EElCRvs) and [a single PR hijacking the npm registry](https://www.youtube.com/watch?v=gwTQLZSIlsU). I pointed my agents at the fun one. This post is about what happened when I went back and watched the other one.
 
