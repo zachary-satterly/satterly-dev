@@ -44,22 +44,31 @@ The video ends with four concrete protections: pnpm 11, a minimum release age, b
 
 Out of the box, my agents had implemented none of them.
 
-Not a complaint. A finding. The agents shipped exactly what I asked for: a working site, fast, on npm with stock settings. Stock npm has no release-age gate at all, and install scripts run by default.
-
-Agents optimize for "is it done yet?" No agent in the loop was inherently asking "is it safe yet?" That question doesn't come from the build loop. It gets brought in from outside, and it's mine to bring.
-
-So I audited what actually ships. Pulled the live 67 KB bundle off nagops.com and read it:
+Not a complaint. A finding. And worth being specific about who "the agents" are: nagops.com was built with Claude Opus 4.8. The output is genuinely clean. I pulled the live 67 KB bundle and read it:
 
 - **Sinks:** zero `eval`, `new Function`, `document.write`, `atob`. One `innerHTML` write, a static string literal with no interpolation. Not a sink.
 - **Network:** one `fetch`, framework-internal; no external host appears anywhere in the bundle. The `mousemove` handlers are the "move your mouse" gag, not tracking.
 - **Input surface:** none. No forms, no prompts, no contenteditable, no clipboard access.
-- **Origins:** the page head loads Google Fonts, and Cloudflare's Insights beacon phones home. The real finding: every visitor hands Google their IP in exchange for two font files.
 
-The bundle is clean. The posture isn't: no CSP, no HSTS, no frame protection, and a security.txt that was actually the SPA's catch-all faking a 200. securityheaders.com summarizes all that as a D, which feels generous:
+Clean code. Now here is everything the same model didn't do until I explicitly went looking, by layer:
 
-![securityheaders.com scan of nagops.com: grade D, missing CSP, HSTS, X-Frame-Options, and Permissions-Policy](../assets/nagops-securityheaders-d.png)
+| Layer | Missing until asked |
+|---|---|
+| Response headers | CSP, HSTS, X-Frame-Options / frame-ancestors, Permissions-Policy |
+| Disclosure | a real `/.well-known/security.txt` (the SPA catch-all faked a 200 for the path) |
+| Install policy | scripts ran by default; no release-age gate; subdeps could resolve from any git repo or tarball; no publisher-trust policy |
+| Toolchain | floating `^` ranges on build-critical deps; Node version unpinned |
+| Third parties | Google Fonts in the head (every visitor hands Google their IP for two font files); analytics beacon on by default |
+| Domain | DNSSEC off; no SPF `-all` / DMARC `p=reject` on a domain that will never send mail |
+| Pipeline | push straight to production, no review gate; for a while the deployed site's source wasn't in any repo at all |
 
-Two different targets hide in this audit. Headers protect the visitor. The TanStack vector never touches a visitor; it executes on the build machine at install time. Harden one and ignore the other and you have a security page that protects nobody.
+Sixteen controls. Zero were present, and zero were refused. Opus never said no. I never asked.
+
+That's the real lesson, and it's not a Claude problem: a frontier model will ship you a clean-coded, insecure product without blinking, because "secure" was never in the acceptance criteria. Nobody ships an insecure product on purpose. You ship it by not asking.
+
+Agents optimize for "is it done yet?" No agent in the loop was inherently asking "is it safe yet?" That question doesn't come from the build loop. It gets brought in from outside, and it's mine to bring.
+
+One more distinction the table hides: headers protect the visitor, install policy protects the build machine. The TanStack vector never touches a visitor; it executes at install time. Harden one and ignore the other and you have a security page that protects nobody.
 
 ## The fix
 
@@ -87,7 +96,7 @@ Zero dependencies, zero install hooks, thirty seconds of reading. Pretext was ne
 
 ## What's still open
 
-The D grade. The hardening files are staged (strict CSP, HSTS, a real security.txt), and the Google Fonts call is getting replaced with self-hosted files so the deployed page phones exactly no one. That's the next post: taking a site agents built from D to A without breaking the gag.
+Most of the table. The headers and the real security.txt are staged and ship with the next deploy. The fonts get self-hosted so the page phones exactly no one. DNSSEC and the no-mail DNS records are one-time dashboard work. The pipeline review gate is getting its own post, because the current failure mode (a bad push auto-deploys to production) deserves a writeup, not a quiet fix. For the scoreboard crowd: securityheaders.com currently grades the live site a D. Fair.
 
 The scoreboard on nagops.com counts story points. The supply chain doesn't award any for installing fast.
 
