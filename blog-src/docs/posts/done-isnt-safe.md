@@ -12,7 +12,7 @@ Fireship put two videos in my feed the same week: [a delightful new text-measure
 
 <!-- more -->
 
-The premise of this series, stated once so the posts don't have to keep explaining themselves: agents can ship working software in an afternoon, and nothing in their loop asks whether it's safe. I guide the builds and help develop. Security is a shared responsibility, and the ultimate owner is me. Each post is one build, one audit, and the gap between them, closed in public.
+The premise of this series: agents can ship working software in an afternoon, and nothing in their loop asks whether it's safe. I guide the builds and help develop. Security is a shared responsibility, and the ultimate owner is me. Each post is one build, one audit, and the gap between them, closed in public.
 
 ## The build
 
