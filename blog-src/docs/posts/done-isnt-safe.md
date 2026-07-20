@@ -12,6 +12,8 @@ Fireship put two videos in my feed the same week: [a delightful new text-measure
 
 <!-- more -->
 
+The premise of this series, stated once so the posts don't have to keep explaining themselves: agents can ship working software in an afternoon, and nothing in their loop asks whether it's safe. I guide the builds and help develop. Security is a shared responsibility, and the ultimate owner is me. Each post is one build, one audit, and the gap between them, closed in public.
+
 ## The build
 
 [nagops.com](https://nagops.com) is a satirical project-management nag: a keyword field of workplace dread ("story points are astrology for engineers"), a sprint clock that never stops, UFOs that abduct your backlog. Agents built it. Vite, TypeScript, and one runtime dependency: [pretext](https://github.com/chenglou/pretext), Cheng Lou's text measurement engine. Pretext measures every keyword once; after that, physics, hit-testing, and scoring are arithmetic on cached widths. It's a great library doing a small job well.
@@ -42,11 +44,22 @@ The video ends with four concrete protections: pnpm 11, a minimum release age, b
 
 Out of the box, my agents had implemented none of them.
 
-Not a complaint. A finding. The agents shipped exactly what I asked for: a working site, fast. What they defaulted to was npm with stock settings (no release-age gate exists there at all), install scripts enabled, Google Fonts called from the page head, no CSP, no HSTS, and a security.txt that was actually the SPA's catch-all faking a 200. Here's what securityheaders.com thought of it:
+Not a complaint. A finding. The agents shipped exactly what I asked for: a working site, fast, on npm with stock settings. Stock npm has no release-age gate at all, and install scripts run by default.
+
+Agents optimize for "is it done yet?" No agent in the loop was inherently asking "is it safe yet?" That question doesn't come from the build loop. It gets brought in from outside, and it's mine to bring.
+
+So I audited what actually ships. Pulled the live 67 KB bundle off nagops.com and read it:
+
+- **Sinks:** zero `eval`, `new Function`, `document.write`, `atob`. One `innerHTML` write, a static string literal with no interpolation. Not a sink.
+- **Network:** one `fetch`, framework-internal; no external host appears anywhere in the bundle. The `mousemove` handlers are the "move your mouse" gag, not tracking.
+- **Input surface:** none. No forms, no prompts, no contenteditable, no clipboard access.
+- **Origins:** the page head loads Google Fonts, and Cloudflare's Insights beacon phones home. The real finding: every visitor hands Google their IP in exchange for two font files.
+
+The bundle is clean. The posture isn't: no CSP, no HSTS, no frame protection, and a security.txt that was actually the SPA's catch-all faking a 200. securityheaders.com summarizes all that as a D, which feels generous:
 
 ![securityheaders.com scan of nagops.com: grade D, missing CSP, HSTS, X-Frame-Options, and Permissions-Policy](../assets/nagops-securityheaders-d.png)
 
-Agents optimize for "is it done yet?" Nobody in the loop was asking "is it safe yet?" That's the actual division of labor: they build, I secure. Which is the whole premise of this series.
+Two different targets hide in this audit. Headers protect the visitor. The TanStack vector never touches a visitor; it executes on the build machine at install time. Harden one and ignore the other and you have a security page that protects nobody.
 
 ## The fix
 
