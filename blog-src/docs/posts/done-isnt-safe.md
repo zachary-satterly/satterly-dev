@@ -72,13 +72,12 @@ One more distinction the table hides: headers protect the visitor, install polic
 
 ## The fix
 
-The nagops repo now runs pnpm 11. The entire config fits on a screen:
+The nagops repo now runs pnpm 11. The entire config is three lines of `pnpm-workspace.yaml`:
 
 ```yaml
-# pnpm-workspace.yaml
-minimumReleaseAge: 4320    # nothing published in the last 3 days gets installed
-blockExoticSubdeps: true   # transitive deps can't come from git repos or tarball URLs
-trustPolicy: no-downgrade  # refuse packages whose publisher trust dropped
+minimumReleaseAge: 4320
+blockExoticSubdeps: true
+trustPolicy: no-downgrade
 ```
 
 What each line buys, against the incident above:
