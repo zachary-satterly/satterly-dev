@@ -18,7 +18,7 @@ The premise of this series: agents can ship working software in an afternoon, an
 
 [nagops.com](https://nagops.com) is a satirical project-management nag: a keyword field of workplace dread, a sprint clock that never stops, UFOs that abduct your backlog. My favorite keyword in the field: "story points are astrology for engineers." Agents built it. Vite, TypeScript, and one runtime dependency: [pretext](https://github.com/chenglou/pretext), Cheng Lou's text measurement engine. Pretext measures every keyword once; after that, physics, hit-testing, and scoring are arithmetic on cached widths. It's a great library doing a small job well.
 
-![nagops.com, the Ship It scoreboard and keyword field](../assets/nagops-ship-it.png)
+![nagops.com, the Ship It scoreboard and keyword field](../assets/nagops-ship-it.webp)
 
 That's the first video's contribution. Now the second one.
 
