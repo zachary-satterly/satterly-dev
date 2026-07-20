@@ -96,7 +96,7 @@ Zero dependencies, zero install hooks, thirty seconds of reading. Pretext was ne
 
 ## What's still open
 
-Most of the table. The headers and the real security.txt are staged and ship with the next deploy. The fonts get self-hosted so the page phones exactly no one. DNSSEC and the no-mail DNS records are one-time dashboard work. The pipeline review gate is getting its own post, because the current failure mode (a bad push auto-deploys to production) deserves a writeup, not a quiet fix. For the scoreboard crowd: securityheaders.com currently grades the live site a D. Fair.
+Most of the table. The headers and the real security.txt are staged and ship with the next deploy. The fonts get self-hosted so the page phones exactly no one. DNSSEC and the no-mail DNS records are one-time dashboard work. The pipeline review gate is getting its own post, because the current failure mode (a bad push auto-deploys to production) deserves a writeup, not a patch note. For the scoreboard crowd: securityheaders.com currently grades the live site a D. Fair.
 
 The scoreboard on nagops.com counts story points. The supply chain doesn't award any for installing fast.
 
