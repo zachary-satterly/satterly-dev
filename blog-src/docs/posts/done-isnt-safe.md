@@ -97,6 +97,8 @@ Most of the table. The headers and the real security.txt are staged and ship wit
 
 The scoreboard on nagops.com counts story points. The supply chain doesn't award any for installing fast.
 
+Next up - Something with a dashboard...
+
 ---
 
 *Sources: [TanStack postmortem](https://tanstack.com/blog/npm-supply-chain-compromise-postmortem) · [TanStack advisory](https://github.com/TanStack/router/security/advisories/GHSA-g7cv-rxg3-hmpx) · [Aikido campaign report](https://www.aikido.dev/blog/mini-shai-hulud-is-back-tanstack-compromised) · [pnpm supply-chain docs](https://pnpm.io/supply-chain-security) · [GitHub: untrusted code checkout](https://docs.github.com/en/actions/reference/security/secure-use#mitigating-the-risks-of-untrusted-code-checkout)*
