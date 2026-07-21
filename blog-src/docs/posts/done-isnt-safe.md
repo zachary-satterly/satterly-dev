@@ -66,7 +66,7 @@ That's the real lesson, and it's not a Claude problem: a frontier model will shi
 
 Agents optimize for "is it done yet?" No agent in the loop was inherently asking "is it safe yet?" That question doesn't come from the build loop. It gets brought in from outside, and it's mine to bring.
 
-One more distinction the table hides: headers protect the visitor, install policy protects the build machine. The TanStack vector never touches a visitor; it executes at install time. Harden one and ignore the other and you have a security page that protects nobody.
+nagops is a mostly static frontend: no server, no API, no user input. The surface facing a visitor is limited, and the clean bundle bears that out. Which is the real point the table makes. The risk that matters isn't in the static assets a visitor loads, it's in the supply chain that built them. Headers protect the visitor, install policy protects the build machine. The TanStack vector never touches a visitor; it executes at install time. Harden one, ignore the other, and you have a security page that protects nobody.
 
 ## The fix
 
