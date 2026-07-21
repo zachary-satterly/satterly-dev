@@ -91,6 +91,16 @@ And the one runtime dependency got the manual treatment before it was ever insta
 
 Zero dependencies, zero install hooks, thirty seconds of reading. Pretext was never implicated in the TanStack campaign. The point is I can say that from the tarball, not from vibes.
 
+## The second opinion
+
+Before deploying I had a different model, Codex, run an adversarial review of the repo: injection sinks, CSP against actual bundle behavior, the dependency tree, secrets, plus bounded checks against the live site. Read-only, one permitted build, 31 minutes.
+
+Zero P0s, zero P1s. One advisory on the locked pretext release, pinned forward the same day. And one finding that actually matters: the live site didn't match the reviewed build. nagops.com was still serving an older deploy, so everything I'd verified was true of the repository and false of production.
+
+That's the honest takeaway for a site this size. With no server, no input, and no state, the code review converges to boring in one pass; there isn't much for either model to find. What's left isn't a code problem. It's provenance between the artifact you reviewed and the artifact you serve, which is the same property TanStack's attacker abused at the other end of the pipe. Deployment parity is the last supply-chain link, and at the moment of the review it was the one I was failing.
+
+Opus built it. Codex reviewed it. The miss was still mine.
+
 ## What's still open
 
 Most of the table. The headers and the real security.txt are staged and ship with the next deploy. The fonts get self-hosted so the page phones exactly no one. DNSSEC and the no-mail DNS records are one-time dashboard work. The pipeline review gate is getting its own post, because the current failure mode (a bad push auto-deploys to production) deserves a writeup, not a patch note. For the scoreboard crowd: securityheaders.com currently grades the live site a D. Fair.
