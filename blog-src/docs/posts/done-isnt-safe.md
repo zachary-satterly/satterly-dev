@@ -34,7 +34,7 @@ No password was cracked. The chain, per TanStack's postmortem:
 
 The release path was authenticated the whole time. The inputs behind it were already rotten. Signatures answer "did the right pipeline publish this?", not "was the pipeline's lunch poisoned?"
 
-One more detail. The malicious commits were authored as `claude <claude@users.noreply.github.com>`. Fabricated identity, not the real Anthropic tooling. The attacker knew nobody looks twice at an AI's name in a commit log anymore. Sit with that.
+One more detail. The malicious commits were authored as `claude <claude@users.noreply.github.com>`. Fabricated identity, not the real Anthropic tooling. The attacker knew nobody looks twice at an AI's name in a commit log anymore.
 
 ## The audit
 
@@ -60,7 +60,7 @@ Clean code. Now here is everything the same model didn't do until I explicitly w
 | Domain | DNSSEC off; no SPF `-all` / DMARC `p=reject` on a domain that will never send mail |
 | Pipeline | push straight to production, no review gate; for a while the deployed site's source wasn't in any repo at all |
 
-Sixteen controls. Zero were present, and zero were refused. Opus never said no. I never asked.
+Every control in that table was missing. None were refused. Opus never said no. I never asked.
 
 That's the real lesson, and it's not a Claude problem: a frontier model will ship you a clean-coded, insecure product without blinking, because "secure" was never in the acceptance criteria. Nobody ships an insecure product on purpose. You ship it by not asking.
 
