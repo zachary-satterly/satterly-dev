@@ -7,6 +7,10 @@
 <meta name="description" content="Zachary Satterly. Security professional and AI developer.">
 <meta property="og:title" content="Zachary Satterly">
 <meta property="og:description" content="Security professional. AI developer.">
+<meta property="og:url" content="https://satterly.dev/">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://satterly.dev/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
   :root {
     --bg: #0c0e12;
@@ -61,7 +65,7 @@
     letter-spacing: -0.01em;
   }
   h1 .sec { color: var(--accent-sec); }
-  h1 .ai  { color: var(--accent-ai); }
+  h1 .ai  { color: var(--accent-ai); white-space: nowrap; }
   .caret {
     display: inline-block;
     width: 0.55em;
@@ -95,7 +99,6 @@
   a { color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--faint); padding-bottom: 1px; }
   a:hover { border-bottom-color: var(--accent-ai); }
   .dim { color: var(--dim); }
-  .placeholder { color: var(--dim); font-style: normal; }
   footer {
     margin-top: 3.4rem;
     padding-top: 1.2rem;
@@ -127,7 +130,7 @@
     <section>
       <h2>Elsewhere</h2>
       <ul>
-        <li><a href="https://github.com/ur-passwd-hash" rel="me">GitHub</a></li>
+        <li><a href="https://github.com/zachary-satterly" rel="me">github.com/zachary-satterly</a></li>
         <li><a href="mailto:zachary.satterly@gmail.com">zachary.satterly@gmail.com</a></li>
       </ul>
     </section>
@@ -143,31 +146,17 @@
     </section>
 
     <section>
-      <h2>Writing</h2>
-      <ul>
-        <li>
-          <a href="/blog/done-isnt-safe/">Done isn't safe</a>
-          <span class="dim">&middot; build it &amp; secure it, part 1</span>
-        </li>
-        <li><a href="/blog/" class="dim">all posts &rarr;</a></li>
-      </ul>
-    </section>
-
-    <section>
       <h2>Projects</h2>
       <ul id="projects">
         <li>
           <a href="https://nagops.com">nagops.com</a>
           <span class="dim">&middot; IS IT DONE YET?</span>
         </li>
-        <!-- Template for future entries:
-        <li><a href="https://github.com/USER/REPO">repo-name</a> <span class="dim">one-line description</span></li>
-        -->
       </ul>
     </section>
 
     <footer>
-      &copy; 2026 Zachary Satterly
+      &copy; 2026 Zachary Satterly &middot; <a href="https://github.com/zachary-satterly/satterly-dev">source</a>
     </footer>
   </div>
 </main>

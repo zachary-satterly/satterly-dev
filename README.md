@@ -1,6 +1,6 @@
 # satterly.dev
 
-Personal site with a typed headline and a blog. The homepage has no framework, no build step, and no runtime third-party requests.
+Personal site with a typed headline. No framework, no build step, and no runtime third-party requests.
 
 ## How it works
 
@@ -9,16 +9,13 @@ The headline types itself out, and nothing below it shifts while it types. That'
 ## Layout
 
 ```
-index.html          homepage (no build — served verbatim)
+index.html          homepage (served verbatim)
 main.js             typewriter + height reservation
-vendor/pretext/     the homepage's one dependency, vendored at a pinned version (MIT)
-blog-src/           MkDocs Material blog project (markdown posts in docs/posts/)
-build.sh            Pages build: copies homepage + builds blog into public/
-requirements.txt    mkdocs-material, pinned
-_headers            security headers; strict CSP on /, relaxed for Material on /blog/*
+favicon.svg         icon
+vendor/pretext/     the one dependency, vendored at a pinned version (MIT)
+build.sh            Pages build: copies the site into public/
+_headers            security headers; strict CSP
 ```
-
-Writing a post = drop a markdown file in `blog-src/docs/posts/`, push. Cloudflare rebuilds and deploys.
 
 ## Supply-chain posture
 
