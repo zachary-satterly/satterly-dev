@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About · Zachary Satterly</title>
+<meta name="description" content="Zachary Satterly. Security professional and AI developer.">
+<meta property="og:title" content="Zachary Satterly">
+<meta property="og:description" content="Security professional. AI developer.">
+<meta property="og:url" content="https://satterly.dev/about">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://satterly.dev/about">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+  :root {
+    --bg: #0c0e12;
+    --fg: #e8e6e1;
+    --dim: #8a8f98;
+    --faint: #3a3f47;
+    --accent-sec: #7ee2a8;   /* security */
+    --accent-ai: #8ab8ff;    /* AI */
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #faf9f7;
+      --fg: #1b1d21;
+      --dim: #6b7078;
+      --faint: #d8d5cf;
+      --accent-sec: #0a7d43;
+      --accent-ai: #1d5fd6;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--mono);
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    min-height: 100svh;
+    align-items: center;
+    justify-content: center;
+  }
+  main {
+    width: min(680px, 92vw);
+    padding: 4rem 0 5rem;
+  }
+  .kicker a { color: inherit; border: 0; }
+  .kicker {
+    font-size: 0.8rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin: 0 0 2.2rem;
+  }
+  h1 {
+    font-size: clamp(1.5rem, 4.6vw, 2.3rem);
+    font-weight: 500;
+    line-height: 1.45;
+    margin: 0 0 1.6rem;
+    letter-spacing: -0.01em;
+  }
+  h1 .sec { color: var(--accent-sec); }
+  h1 .ai  { color: var(--accent-ai); white-space: nowrap; }
+  .bio {
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: var(--dim);
+    margin: 0 0 2.6rem;
+    max-width: 56ch;
+  }
+  .bio strong { color: var(--fg); font-weight: 500; }
+  section h2 {
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 2.4rem 0 0.9rem;
+    font-weight: 500;
+  }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { margin: 0.45rem 0; font-size: 0.95rem; line-height: 1.7; }
+  a { color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--faint); padding-bottom: 1px; }
+  a:hover { border-bottom-color: var(--accent-ai); }
+  .dim { color: var(--dim); }
+  footer {
+    margin-top: 3.4rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--faint);
+    font-size: 0.78rem;
+    color: var(--dim);
+    line-height: 1.7;
+  }
+  footer a { color: var(--dim); }
+</style>
+</head>
+<body>
+<main>
+  <p class="kicker"><a href="/">satterly.dev</a> &middot; Zachary Satterly</p>
+
+  <h1><span class="sec">Security professional.</span> <span class="ai">AI developer.</span></h1>
+
+  <div>
+    <p class="bio">
+      Fifteen-plus years <strong>building and securing</strong> software:
+      security programs stood up from zero, applications shipped, CI/CD
+      supply chains hardened. Current focus:
+      <strong>agent and AI security</strong>.
+    </p>
+
+    <section>
+      <h2>Elsewhere</h2>
+      <ul>
+        <li><a href="https://github.com/zachary-satterly" rel="me">github.com/zachary-satterly</a></li>
+        <li><a href="mailto:zachary.satterly@gmail.com">zachary.satterly@gmail.com</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Speaking</h2>
+      <ul>
+        <li>
+          BSides Philadelphia 2023:
+          <span class="dim">&ldquo;Whose Line is it Anyway? Attacks and Defenses in the Modern World of CI/CD&rdquo;</span>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Projects</h2>
+      <ul id="projects">
+        <li>
+          <a href="https://nagops.com">nagops.com</a>
+          <span class="dim">&middot; IS IT DONE YET?</span>
+        </li>
+      </ul>
+    </section>
+
+    <footer>
+      &copy; 2026 Zachary Satterly &middot; <a href="https://github.com/zachary-satterly/satterly-dev">source</a>
+    </footer>
+  </div>
+</main>
+
+</body>
+</html>

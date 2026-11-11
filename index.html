@@ -17,150 +17,49 @@
     --fg: #e8e6e1;
     --dim: #8a8f98;
     --faint: #3a3f47;
-    --accent-sec: #7ee2a8;   /* security */
-    --accent-ai: #8ab8ff;    /* AI */
+    --accent-sec: #7ee2a8;
     --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
   }
   @media (prefers-color-scheme: light) {
-    :root {
-      --bg: #faf9f7;
-      --fg: #1b1d21;
-      --dim: #6b7078;
-      --faint: #d8d5cf;
-      --accent-sec: #0a7d43;
-      --accent-ai: #1d5fd6;
-    }
+    :root { --bg: #faf9f7; --fg: #1b1d21; --dim: #6b7078; --faint: #d8d5cf; --accent-sec: #0a7d43; }
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
+  html, body { margin: 0; height: 100%; }
   body {
-    background: var(--bg);
-    color: var(--fg);
-    font-family: var(--mono);
-    -webkit-font-smoothing: antialiased;
-    display: flex;
-    min-height: 100svh;
-    align-items: center;
-    justify-content: center;
+    background: var(--bg); color: var(--fg); font-family: var(--mono);
+    -webkit-font-smoothing: antialiased; overflow: hidden;
   }
-  main {
-    width: min(680px, 92vw);
-    padding: 4rem 0 5rem;
-  }
-  .kicker {
-    font-size: 0.8rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--dim);
-    margin: 0 0 2.2rem;
-  }
-  /* Typed headline. min-height is set at runtime from a pretext
-     measurement of the FINAL text, so nothing below it shifts
-     while the typewriter runs. */
-  h1 {
-    font-size: clamp(1.5rem, 4.6vw, 2.3rem);
-    font-weight: 500;
-    line-height: 1.45;
-    margin: 0 0 1.6rem;
-    letter-spacing: -0.01em;
-  }
-  h1 .sec { color: var(--accent-sec); }
-  h1 .ai  { color: var(--accent-ai); white-space: nowrap; }
-  .caret {
-    display: inline-block;
-    width: 0.55em;
-    height: 1.05em;
-    margin-left: 0.12em;
-    vertical-align: text-bottom;
-    background: var(--fg);
-    animation: blink 1.06s steps(1) infinite;
-  }
-  @keyframes blink { 50% { opacity: 0; } }
-  .after-type { opacity: 0; transition: opacity 0.9s ease; }
-  .after-type.show { opacity: 1; }
-  .bio {
-    font-size: 0.98rem;
-    line-height: 1.75;
-    color: var(--dim);
-    margin: 0 0 2.6rem;
-    max-width: 56ch;
-  }
-  .bio strong { color: var(--fg); font-weight: 500; }
-  section h2 {
-    font-size: 0.8rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--faint);
-    margin: 2.4rem 0 0.9rem;
-    font-weight: 500;
-  }
-  ul { list-style: none; margin: 0; padding: 0; }
-  li { margin: 0.45rem 0; font-size: 0.95rem; line-height: 1.7; }
-  a { color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--faint); padding-bottom: 1px; }
-  a:hover { border-bottom-color: var(--accent-ai); }
-  .dim { color: var(--dim); }
-  footer {
-    margin-top: 3.4rem;
-    padding-top: 1.2rem;
-    border-top: 1px solid var(--faint);
-    font-size: 0.78rem;
-    color: var(--dim);
-    line-height: 1.7;
-  }
-  footer a { color: var(--dim); }
-  @media (prefers-reduced-motion: reduce) {
-    .caret { animation: none; }
-  }
+  #stage { position: fixed; inset: 0; touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; }
+  #stage.held { cursor: grabbing; }
+  .ch { position: absolute; left: 0; top: 0; white-space: pre; color: var(--fg); font-weight: 600; will-change: transform; line-height: 1; text-shadow: 0 0 .22em var(--bg), 0 0 .22em var(--bg), 0 0 .4em var(--bg), 0 0 .4em var(--bg), 0 0 .7em var(--bg), 0 0 .7em var(--bg); }
+  .dog { position: absolute; margin: 0; font-family: var(--mono); line-height: 1; white-space: pre; color: var(--dim); pointer-events: none; }
+  .dog b { font-weight: inherit; }
+  #dogL { display: none; }
+  @media (prefers-color-scheme: light) { #dogD { display: none; } #dogL { display: block; } }
+  #shades { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; will-change: transform; }
+  #shades rect { fill: #000; shape-rendering: crispEdges; }
+  .label { position: fixed; font-size: 0.8rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dim); margin: 0; }
+  #kicker { left: clamp(20px, 4vw, 48px); top: clamp(20px, 4vh, 40px); }
+  nav { position: fixed; left: clamp(20px, 4vw, 48px); bottom: clamp(20px, 4vh, 40px); font-size: 0.9rem; line-height: 1.9; }
+  nav a { display: table; color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--faint); line-height: 1.5; margin: .25rem 0; }
+  nav a:hover { border-bottom-color: var(--accent-sec); }
+  a:focus-visible { outline: 1px solid var(--fg); outline-offset: 4px; }
+  @media (max-width: 1040px) { nav { bottom: auto; top: calc(clamp(20px, 4vh, 40px) + 1.8rem); } #about { bottom: auto; top: calc(clamp(20px, 4vh, 40px) + 2.15rem); } }
+  @media (max-width: 640px) { .label { font-size: 0.72rem; letter-spacing: 0.14em; } }
+  #about { position: fixed; right: clamp(20px, 4vw, 48px); bottom: clamp(20px, 4vh, 40px); font-size: 0.8rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--faint); text-decoration: none; }
+  #about:hover, #about:focus-visible { color: var(--dim); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 </style>
 </head>
 <body>
-<main>
-  <p class="kicker">satterly.dev &middot; Zachary Satterly</p>
+<h1 class="sr">Zachary Satterly builds and secures software. Now: agent and AI security. The sentence hangs as a chain around the neck of a dog in black sunglasses.</h1>
+<div id="stage" aria-hidden="true"></div>
+<p class="label" id="kicker">satterly.dev &middot; agent and AI security</p>
+<nav>
+  <a href="https://github.com/zachary-satterly" rel="me">github.com/zachary-satterly</a>
+</nav>
+<a id="about" href="/about">about</a>
 
-  <h1 id="headline" aria-label="Security professional. AI developer."><span id="typed"></span><span class="caret" id="caret" aria-hidden="true"></span></h1>
-
-  <div class="after-type" id="rest">
-    <p class="bio">
-      Fifteen-plus years <strong>building and securing</strong> software:
-      security programs stood up from zero, applications shipped, CI/CD
-      supply chains hardened. Current focus:
-      <strong>agent and AI security</strong>.
-    </p>
-
-    <section>
-      <h2>Elsewhere</h2>
-      <ul>
-        <li><a href="https://github.com/zachary-satterly" rel="me">github.com/zachary-satterly</a></li>
-        <li><a href="mailto:zachary.satterly@gmail.com">zachary.satterly@gmail.com</a></li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Speaking</h2>
-      <ul>
-        <li>
-          BSides Philadelphia 2023:
-          <span class="dim">&ldquo;Whose Line is it Anyway? Attacks and Defenses in the Modern World of CI/CD&rdquo;</span>
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Projects</h2>
-      <ul id="projects">
-        <li>
-          <a href="https://nagops.com">nagops.com</a>
-          <span class="dim">&middot; IS IT DONE YET?</span>
-        </li>
-      </ul>
-    </section>
-
-    <footer>
-      &copy; 2026 Zachary Satterly &middot; <a href="https://github.com/zachary-satterly/satterly-dev">source</a>
-    </footer>
-  </div>
-</main>
-
-<script type="module" src="/main.js"></script>
+<script src="/main.js"></script>
 </body>
 </html>
