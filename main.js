@@ -9,7 +9,7 @@
   // One scene per dog. f = height share of the viewport, m = gap under the art. Points are fractions of the art box.
   const SCENES = [
     { art: "w", f: 0.76, m: 0, text: "Zachary Satterly builds and secures software." },
-    { art: "d", f: 0.7, m: 0, text: "Fifteen-plus years. Still on watch." },
+    { art: "d", f: 0.7, m: 0, text: "" },
     { art: "r", f: 1, m: 0, bleed: true, text: "He hunts bugs. I hunt squirrels." },
     { art: "h", f: 0.8, m: 0, focus: 0.3, text: "Say hello on GitHub." },
   ];
@@ -158,7 +158,6 @@
       const w = box.w * 0.5, h = w * 0.62, p = at(0.458, 0.1);
       const crown = makeProp(CROWN, { x: p.x - w / 2, y: p.y - h, w, h, rot: 3 });
       crown.node.classList.add("gold"); props.push(crown);
-      line(s.text, fs, p.y - h - fs * 2.6);
     },
     r(s, fs) {
       line(s.text, fs, innerHeight * 0.15);

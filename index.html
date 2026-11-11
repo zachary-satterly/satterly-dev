@@ -13,15 +13,13 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
   :root {
+    color-scheme: dark;
     --bg: #0c0e12;
     --fg: #e8e6e1;
     --dim: #8a8f98;
     --faint: #3a3f47;
     --accent-sec: #7ee2a8;
     --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
-  }
-  @media (prefers-color-scheme: light) {
-    :root { --bg: #faf9f7; --fg: #1b1d21; --dim: #6b7078; --faint: #d8d5cf; --accent-sec: #0a7d43; }
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; height: 100%; }
@@ -34,7 +32,6 @@
   .ch { position: absolute; left: 0; top: 0; white-space: pre; color: var(--fg); font-weight: 600; will-change: transform; line-height: 1; pointer-events: none; text-shadow: 0 0 .22em var(--bg), 0 0 .22em var(--bg), 0 0 .4em var(--bg), 0 0 .4em var(--bg), 0 0 .7em var(--bg), 0 0 .7em var(--bg); }
   .dog { position: absolute; margin: 0; font-family: var(--mono); line-height: 1; white-space: pre; color: var(--dim); pointer-events: none; }
   .dog.light { display: none; }
-  @media (prefers-color-scheme: light) { .dog.dark { display: none; } .dog.light { display: block; } }
   .prop { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; will-change: transform; }
   .prop rect { fill: #000; shape-rendering: crispEdges; }
   .prop.gold path { fill: #d9a520; }
@@ -62,7 +59,7 @@
 </style>
 </head>
 <body>
-<h1 class="sr">Zachary Satterly builds and secures software. Now: agent and AI security. Each sentence sits with a character-art dog: Fifteen-plus years. Still on watch. He hunts bugs. I hunt squirrels. Say hello on GitHub.</h1>
+<h1 class="sr">Zachary Satterly builds and secures software. Now: agent and AI security. Each sentence sits with a character-art dog: He hunts bugs. I hunt squirrels. Say hello on GitHub.</h1>
 <div id="stage" aria-hidden="true"></div>
 <nav>
   <a href="https://github.com/zachary-satterly" rel="me">github.com/zachary-satterly</a>
@@ -70,6 +67,6 @@
 <p class="label" id="pager"><button id="prev" aria-label="Previous dog">&lsaquo;</button><span id="count">1 / 4</span><button id="next" aria-label="Next dog">&rsaquo;</button></p>
 <a id="about" href="/about">about</a>
 
-<script src="/main.js?v=2"></script>
+<script src="/main.js?v=3"></script>
 </body>
 </html>
